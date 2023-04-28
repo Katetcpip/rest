@@ -1,0 +1,15 @@
+.nav {
+    @apply flex flex-row items-center text-3xl font-semibold
+}
+
+.inner-nav {
+    @apply flex flex-row m-4 mb-0 pr-4 pb-4 border-b border-solid border-gray-300 w-full
+}
+
+.search-border {
+    @apply flex flex-row border-2 rounded-xl border-yellow-300 border-solid rounded-xl transition duration-0
+}
+
+.gradient {
+    @apply rounded-full ml-auto p-0.5
+}
