@@ -1,20 +1,32 @@
 import "./styles.css"
+import {Link} from 'react-router-dom'
 
-const Nav = () =>{
+const Nav = ({restaurants, copyArray, onChange}:any) =>{
+
+    const restSearch = (rest:any) => {
+        const restToFind = copyArray.filter((el : any) => el.name.toLowerCase().includes(rest.toLowerCase()))
+        onChange(restToFind)
+        console.log(restToFind)
+    }
     return (
-    <nav className='nav sticky top-0 bg-white'>
+    <nav className='nav sticky top-0 bg-white z-50'>
     <div className='inner-nav'>
-        <img alt='' src='./logo.png' className='w-12 h-11 mr-4 cursor-pointer flex items-center h-full'></img>
-
-        <p className='flex items-center mr-20 text-3xl text-gray-800'>Купи.Еда</p>
+        <Link to='/' className='flex'>
+            <img alt='' src='./logo.png' className='w-12 h-11 mr-4 cursor-pointer flex items-center h-full'></img>
+            <p className='flex items-center mr-20 text-3xl text-gray-800'>Купи.Еда</p>
+        </Link>
 
         <div className='search-border hover:duration-700 hover:border-yellow-400'>
             <div className='rounded-l-lg mr-2 flex items-center pl-2'><img alt='' className='w-5 h-5' src='./lupa.png'></img></div>
                 <input 
                 className='p-1 text-base border-none focus-none font-thin outline-none'
-                placeholder='Найти ресторан'>
+                placeholder='Найти ресторан'
+                onChange={(event) => restSearch(event.target.value)}
+                >
                 </input>
-            <div className='text-gray-600 text-lg rounded-r-lg bg-yellow-300 hover:bg-yellow-400 flex items-center px-4 py-1 transition duration-0 hover:duration-700 cursor-pointer'>Найти</div>
+            <Link to='/' className='text-gray-600 text-lg rounded-r-lg bg-yellow-300 hover:bg-yellow-400 flex items-center px-4 py-1 transition duration-0 hover:duration-700 cursor-pointer'>
+                <p>Найти</p>
+            </Link>
         </div>  
 
         <div className='flex flex-row items-center bg-gray-700 rounded-xl pr-4 ml-4 p-1'>

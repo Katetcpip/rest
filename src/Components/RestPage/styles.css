@@ -1,0 +1,9 @@
+    button,
+    [type='button'],
+    [type='reset'],
+    [type='submit'] {
+        -webkit-appearance: button;
+        background-color: rgba(255, 230, 5, 0) !important;
+        color: black;
+        background-image: none;
+    }
