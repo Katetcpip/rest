@@ -1,0 +1,10 @@
+button,
+[type='button'] {
+    display: none;
+}
+
+button,
+[type='submit'] {
+    background-color: rgba(253, 194, 0, 0.622) !important;
+    margin-top: 20px;
+}

@@ -1,11 +1,10 @@
 import './App.css';
-import Nav from "Components/Navigation"
 import Render from 'Components/Render';
-import Footer from 'Components/Footer';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import RestPage from 'Components/RestPage';
+import StartPage from 'Components/StartPage';
 
 function App() {
 
@@ -60,12 +59,11 @@ function App() {
 
     return ( 
     <BrowserRouter>
-        <Nav restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>
         <Routes>
-            <Route path='/' element={<Render restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
-            <Route path='/rest/:slug' element={<RestPage/>}></Route>
+            <Route path='/' element={<StartPage/>}></Route>
+            <Route path='/rest' element={<Render restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
+            <Route path='/rest/:slug' element={<RestPage restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>}></Route>
         </Routes>
-        <Footer/>
         </BrowserRouter> 
     );
 }

@@ -10,8 +10,10 @@ import {Link} from 'react-router-dom'
 import {ArrowLeftOutlined} from '@ant-design/icons'
 import ComponentDemo from "Components/Advertising";
 import ScrollButton from "Components/ScrollButton";
+import Nav from "Components/Navigation";
+import Footer from "Components/Footer";
 
-const RestPage = () => {
+const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
 
     const [restaurant, setRestaurant] = useState(
         {
@@ -29,6 +31,7 @@ const RestPage = () => {
         }
     );
     const {slug} = useParams();
+    
     const [load, setLoad] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +44,6 @@ const RestPage = () => {
         };
         fetchData();
     }, [slug]);
-
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -59,8 +61,9 @@ const RestPage = () => {
 
      return(
         <>     
+        <Nav restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>
        <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
-       <Link to='/'>
+       <Link to='/rest'>
             <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
         </Link>
        {load ? <div className="flex justify-center">
@@ -97,10 +100,11 @@ const RestPage = () => {
                     <ComponentDemo text="🎁 Блюдо в подрок при заказе от 1000₽"/>
                     <ScrollButton />
                     <div className='pt-10 w-full flex m-auto text-4xl font-semibold text-gray-800 '>Для вас</div>
-                    <Menu slug={slug}/>
+                    <Menu slug={slug} addToCart={addToCart}/>
             </div>
         }
         </div>
+        <Footer/>
         </>
          )
 }

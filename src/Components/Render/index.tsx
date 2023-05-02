@@ -5,6 +5,8 @@ import dateFormat from "dateformat";
 import './styles.css'
 import {Link} from 'react-router-dom'
 import ScrollButton from "Components/ScrollButton";
+import Nav from "Components/Navigation";
+import Footer from "Components/Footer";
 
 
 const Render = ({restaurants, copyArray, load, onChange} : any) => {
@@ -122,6 +124,7 @@ const Render = ({restaurants, copyArray, load, onChange} : any) => {
     }
      return(
         <>
+          <Nav restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>
          <div className='p-4 pt-6 text-4xl font-bold text-gray-800 mt-4'>Рестораны</div>
          
         <div className="px-3 py-3 rounded-3xl bg-slate-100 m-4 flex flex-row gap-3">
@@ -161,6 +164,7 @@ const Render = ({restaurants, copyArray, load, onChange} : any) => {
             </div>
         }
         <ScrollButton />
+        <Footer/>
         </>
          )
 }

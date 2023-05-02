@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import axios from 'axios';
 import './styles.css';
 import QandA from 'Components/QandA';
+import Support from 'Components/Support';
 
 const Menu = ({slug}:any) => {
 
@@ -16,6 +17,36 @@ const Menu = ({slug}:any) => {
             price  : 'price-example',
         }
     ]);
+
+    useEffect(() => {
+        let newArr = JSON.parse(localStorage.getItem('cart') || "null");
+        if (newArr !== null) 
+        setCartItems(newArr)
+      },[]);
+
+    const [cartItems, setCartItems] = useState(
+         [{
+            name : 'name-example',
+            price  : 'price-example',
+            }] 
+       );
+
+    const addToCart = (price:any, name:any) =>{
+        let item = {name, price};
+        let copyArr2 = JSON.parse(JSON.stringify(cartItems))
+        copyArr2.push(item)
+        setCartItems([...cartItems, item])
+        localStorage.setItem("cart", JSON.stringify(copyArr2))
+    }
+
+    const removeFromCart = (price:any, name:any) =>{
+        let item = {name, price};
+        let result = cartItems.findIndex(el => el.name === name)
+        let newArr = JSON.parse(JSON.stringify(cartItems))
+        newArr.splice(result, 1);
+        setCartItems(newArr)
+        localStorage.setItem("cart", JSON.stringify(newArr))
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,12 +73,26 @@ const Menu = ({slug}:any) => {
                                 <p className="text-sm font-normal pr-4 text-slate-400">  {item.description}</p>
                             </div>
                             <div className='flex w-full justify-center mt-auto'>
-                                <div className='font-semibold bg-slate-100 p-3 rounded-2xl flex justify-center w-full cursor-pointer hover:bg-slate-200 hover:duration-700 transition'>➕ Добавить</div>
+                                <div className='font-semibold bg-slate-100 p-3 rounded-2xl flex 
+                                    justify-center w-full cursor-pointer hover:bg-slate-200 
+                                    hover:duration-700 transition'>
+                                        {cartItems.filter(el => el.name === item.name).length<=0 
+                                            ? <div onClick={() => addToCart(item.price, item.name)}>➕ Добавить</div>
+                                            : (
+                                                <>
+                                                    <div className='flex items-center pl-3 w-1/5' onClick={() => removeFromCart(item.price, item.name)}>➖</div>
+                                                    <div className='px-3 w-3/5 text-center'>{cartItems.filter(el => el.name === item.name).length}</div> 
+                                                    <div className='flex items-center pr-3 w-1/5' onClick={() => addToCart(item.price, item.name)}>➕</div>   
+                                                </>
+                                            )
+                                            }
+                                        </div>
                             </div>
                     </div>
                 ))}
             </div>
             <QandA/>
+            <Support/>
         </>
          )
 }
