@@ -12,8 +12,9 @@ import { notification } from 'antd';
 export type CartType =   {
     name: string,
     price: any,
-    amount: number,
-    restaurantId : any
+    quantity : number,
+    restaurantId : any,
+    itemId : number
 }
 
 function App() {
@@ -22,23 +23,9 @@ function App() {
 
     const [load, setLoad] = useState(true);
 
-    const [copyArray, setcopyArray] = useState([
-        {
-            id: 1,
-            name: 'example',
-            slug: 'url-example',
-            phone: 'tel-example',
-            email : 'mailexample-example',
-            cuisine : 'type k-example',
-            address : 'address-example',
-            image : 'img-example',
-            openAt :'timeopen-example',
-            closeAt : 'timeclose-example',
-            description :'descr-example',
-        }
-    ]);
+    const [copyArray, setcopyArray] = useState(Array<Rest>);
 
-    useEffect(() => {
+    useEffect( () => {
         const fetchData = async () => {
             const result = await axios(
                 'https://www.bit-by-bit.ru/api/student-projects/restaurants',
@@ -50,13 +37,15 @@ function App() {
         fetchData();
     }, []);
 
-    const onChange = (whatToSet : any) => {
+    const onChange = (whatToSet : Array<Rest>) : void => {
         setRestaurants(whatToSet)
     }
+
     const [cartItems, setCartItems] = useState(Array<CartType>);
 
     const [api, contextHolder] = notification.useNotification();
-    const openNotification = () => {
+
+    const openNotification = () : void => {
       api.open({
         message: 'Упс!',
         description:
@@ -65,19 +54,19 @@ function App() {
       });
     };
 
-    const actionInCart = (newCart : Array<CartType>) => {
+    const actionInCart = (newCart : Array<CartType>) : void => {
         setCartItems(newCart)
     }
 
-    useEffect(() => {
-        let newArr = JSON.parse(localStorage.getItem('cart') || "null");
+    useEffect( () => {
+        let newArr : Array<CartType> = JSON.parse(localStorage.getItem('cart') || "null");
         if (newArr !== null) 
         setCartItems(newArr)
       },[]);
 
-    const addToCart = (price:any, name:any, restaurantId:any) =>{
-        let amount = 1;
-        let item = {name, price, amount, restaurantId};
+    const addToCart = (price:number, name:string, restaurantId:number, itemId:number) : void => {
+        let quantity = 1;
+        let item : CartType = {name, restaurantId, itemId, quantity, price};
         let copyArr2 : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
 
         if (copyArr2.length === 0)
@@ -86,13 +75,13 @@ function App() {
             localStorage.setItem("cart", JSON.stringify(copyArr2))
             }
 
-            else if(copyArr2.length !== 0 && restaurantId === copyArr2[0].restaurantId) {
-                let findItem = copyArr2.findIndex(el => el.name === name)
+            else if(copyArr2.length !== 0 && restaurantId === copyArr2[0].restaurantId) 
+                {let findItem : number | boolean = copyArr2.findIndex(el => el.name === name)
                 if (findItem !== -1) {
-                    copyArr2[findItem].amount = copyArr2[findItem].amount + 1;
+                    copyArr2[findItem].quantity  = copyArr2[findItem].quantity  + 1;
                     setCartItems(copyArr2)
                     localStorage.setItem("cart", JSON.stringify(copyArr2))
-             }
+                }
                 if (findItem === -1){
                     copyArr2.push(item)
                     setCartItems([...cartItems, item])
@@ -105,38 +94,39 @@ function App() {
             } 
     }
 
-    const removeFromCart = (name:any) =>{
+    const removeFromCart = (name:string) : void => {
         let newArr : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
-        let result = newArr.findIndex(el => el.name === name)
+        let result : number | boolean = newArr.findIndex(el => el.name === name)
 
-        if (newArr[result].amount >= 1) {
-            newArr[result].amount = newArr[result].amount - 1;
+        if (newArr[result].quantity  >= 1) {
+            newArr[result].quantity  = newArr[result].quantity  - 1;
             setCartItems(newArr)
             localStorage.setItem("cart", JSON.stringify(newArr))
         }
 
-        if (newArr[result].amount === 0) {
+        if (newArr[result].quantity  === 0) {
             newArr.splice(result, 1);
             setCartItems(newArr)
             localStorage.setItem("cart", JSON.stringify(newArr))
         }
     }
 
-    const deleteAllCart = () =>{
+    const deleteAllCart = () : void => {
         let newArr : Array<any> = [];
         setCartItems(newArr)
         localStorage.setItem("cart", JSON.stringify(newArr))
     }
 
     return ( 
-    <BrowserRouter>
-        <Routes>
-            <Route path='/' element={<StartPage/>}></Route>
-            <Route path='/cart' element={<Cart cartItems={cartItems} deleteAllCart={deleteAllCart} actionInCart={actionInCart}/>}></Route>
-            <Route path='/rest' element={<Render restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
-            <Route path='/rest/:slug' element={<RestPage copyArray={copyArray} onChange={onChange} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems} contextHolder={contextHolder}/>}></Route>
-        </Routes>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<StartPage/>}></Route>
+                <Route path='/cart' element={<Cart cartItems={cartItems} deleteAllCart={deleteAllCart} actionInCart={actionInCart} copyArray={copyArray} onChange={onChange}/>}></Route>
+                <Route path='/rest' element={<Render restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
+                <Route path='/rest/:slug' element={<RestPage copyArray={copyArray} onChange={onChange} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems} contextHolder={contextHolder}/>}></Route>
+            </Routes>
         </BrowserRouter> 
     );
 }
+
 export default App;

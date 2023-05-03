@@ -12,11 +12,12 @@ import ComponentDemo from "Components/Advertising";
 import ScrollButton from "Components/ScrollButton";
 import Nav from "Components/Navigation";
 import Footer from "Components/Footer";
+import { CartType } from "Components/App";
 
 export type Rest = {
     id: number,
     name: string,
-    slug: any,
+    slug: string,
     phone: any,
     email : string,
     cuisine : string,
@@ -27,7 +28,17 @@ export type Rest = {
     description :string,
 }
 
-const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, contextHolder} : any) => {
+type Props = {
+    copyArray : Array<Rest> ,
+    onChange : (a:any) => void,
+    removeFromCart : (name: string) => void,
+    addToCart : (price:number, name:string, restaurantId:number, itemId:number) => void,
+    cartItems : Array<CartType>,
+    contextHolder : any
+}
+
+const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, contextHolder} : Props) => {
+
     const {slug} = useParams();
 
     useEffect(() => {
@@ -60,19 +71,18 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
       setIsModalOpen(false);
     };
 
-     return(
-        <div className="min-h-screen flex flex-col">   
-        {contextHolder}  
-        <Nav copyArray={copyArray} onChange={onChange}/>
-       <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
-       <Link to='/rest'>
-            <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
-        </Link>
-       {load ? <div className="flex justify-center">
-            <ImageGrid/>
-            </div> 
-            : 
-           (restaurant !== undefined &&                 
+    return(
+       <div className="min-h-screen flex flex-col">   
+            {contextHolder}  
+            <Nav copyArray={copyArray} onChange={onChange}/>
+            <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
+            <Link to='/rest'>
+                  <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
+            </Link>
+            {load ? <div className="flex justify-center">
+                         <ImageGrid/>
+                    </div> 
+            : (restaurant !== undefined &&                 
                 <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-3/5 mb-8"> 
                     <div className="flex flex-col rounded-xl w-full">
                        <div className="flex flex-col items-center w-full h-fit relative">
@@ -89,8 +99,11 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
                                 <div className="rounded-xl text-slate-800 bg-white p-2 font-semibold opacity-70 hover:scale-105 hover:bg-gray-100 transition hover:duration-700"  
                                     onClick={showModal}>❓
                                 </div>
-                                <Modal title="ADDITIONAL INFORMATION" className="font-semibold text-2xl"
-                                     open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                <Modal title="ADDITIONAL INFORMATION" 
+                                        className="font-semibold text-2xl"
+                                        open={isModalOpen} 
+                                        onOk={handleOk} 
+                                        onCancel={handleCancel}>
                                     <p className="text-slate-800 p-2 border-b text-red-800">{restaurant.cuisine.toUpperCase()}</p>
                                     <p className="text-slate-800 p-2 border-b">🕗 {dateFormat((restaurant.openAt), "shortTime")} - {dateFormat((restaurant.closeAt), "shortTime")}</p>
                                     <p className="text-slate-800 p-2 border-b font-normal">✉️ {restaurant.email}</p>
@@ -106,11 +119,11 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
                     <div className='pt-10 w-full flex m-auto text-4xl font-semibold text-gray-800 '>Для вас</div>
                     <Menu slug={slug} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems}/>
                 </div>)
-        }
+            }
+            </div>
+            <Footer/>
         </div>
-        <Footer/>
-        </div>
-         )
+    )
 }
 
 export default RestPage;
