@@ -6,3 +6,5 @@ when choosing another place, the basket will be reset.
 The data is taken from the server. 
 Sorting and adaptive design are implemented using javascript and tailwind. 
 TypeScript also applies.
+
+Сайт опубликован на Netlify -- https://steady-valkyrie-4cf3df.netlify.app/
