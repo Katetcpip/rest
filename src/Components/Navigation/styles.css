@@ -3,7 +3,7 @@
 }
 
 .inner-nav {
-    @apply flex flex-row m-4 mb-0 pr-4 pb-4 border-b border-solid border-gray-300 w-full
+    @apply flex m-4 mb-0 pr-4 pb-4 border-b border-solid border-gray-300 w-full
 }
 
 .search-border {

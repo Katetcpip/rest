@@ -83,12 +83,12 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
                          <ImageGrid/>
                     </div> 
             : (restaurant !== undefined &&                 
-                <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-3/5 mb-8"> 
+                <div className="flex flex-row flex-wrap gap-5 p-4 justify-center lg:w-3/5 sm:w-4/5 w-full mb-8"> 
                     <div className="flex flex-col rounded-xl w-full">
                        <div className="flex flex-col items-center w-full h-fit relative">
                             <img className="rounded-xl w-full h-72 object-cover z-0" alt="" src={restaurant.image}></img>
                             <div className="rounded-xl w-full h-full object-cover z-10 bg-slate-800 absolute left-0 bottom-0 opacity-60 bg-gradient-to-r from-gray-900 via-slate-800 to-yellow-600"></div>
-                            <p className="text-white font-bold text-5xl absolute left-4 bottom-20 z-30">{restaurant.name}</p>
+                            <p className="text-white font-bold sm:text-5xl text-3xl absolute left-4 bottom-20 z-30">{restaurant.name}</p>
                             <div className="flex flex-row gap-2 absolute left-4 bottom-4 z-30">
                                 <div className="rounded-xl text-slate-800 bg-white p-2 font-bold opacity-70">
                                     {restaurant.cuisine.toUpperCase()}
@@ -116,7 +116,7 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
                     <ComponentDemo text="✨ Кешбэк с заказа — 5% вернём на Плюс"/>
                     <ComponentDemo text="🎁 Блюдо в подрок при заказе от 1000₽"/>
                     <ScrollButton />
-                    <div className='pt-10 w-full flex m-auto text-4xl font-semibold text-gray-800 '>Для вас</div>
+                    <div className='pt-10 w-full flex m-auto md:text-4xl text-2xl font-semibold text-gray-800 '>Для вас</div>
                     <Menu slug={slug} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems}/>
                 </div>)
             }

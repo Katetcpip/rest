@@ -91,20 +91,20 @@ const Render = ({restaurants, copyArray, load, onChange} : Props) => {
                  copyArray={copyArray} 
                  onChange={onChange}
             />
-            <div className='p-4 pt-6 text-4xl font-bold text-gray-800 mt-4'>Рестораны</div>
+            <div className='p-4 md:pt-6 pt-2 md:text-4xl text-2xl font-bold text-gray-800 mt-4'>Рестораны</div>
          
-            <div className="px-3 py-3 rounded-3xl bg-slate-100 m-4 flex flex-row gap-3">
-                <div className={butAll === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 hover:text-black filter hover:bg-slate-200"}
+            <div className="px-3 md:py-3 py-1 rounded-3xl bg-slate-100 m-4 flex flex-row flex-wrap gap-3">
+                <div className={butAll === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 hover:text-black filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"}
                     onClick={() => filterAll()}>Все</div>
-                <div className={butOut === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200"} 
+                <div className={butOut === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
                     onClick={() => filterOut()}>Навынос</div>
-                <div className={butTop === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200"} 
+                <div className={butTop === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
                     onClick={() => filterTop()}>Топ</div>
-                <div className={butPasta === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200"} 
+                <div className={butPasta === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
                     onClick={() => filterPasta()}>Паста</div>
-                <div className={butBurger === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200"} 
+                <div className={butBurger === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
                     onClick={() => filterBurger()}>Бургер</div> 
-                <div className={butPizza === false ? "filter hover:bg-slate-200" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200"} 
+                <div className={butPizza === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
                     onClick={() => filterPizza()}>Пицца</div>
             </div>
 
@@ -112,9 +112,9 @@ const Render = ({restaurants, copyArray, load, onChange} : Props) => {
                 ? <div className="flex justify-center">
                     <ImageGrid/>
                   </div> 
-                : <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-20">
+                : <div className="flex flex-row flex-wrap gap-5 p-4 lg:justify-center justify-between w-full mb-20">
                     {restaurants.map((item : Rest) => (
-                        <div key={uuidv4()} className="flex flex-col rounded-xl w-1/6 hover:scale-95 transition hover:duration-700">
+                        <div key={uuidv4()} className="flex flex-col rounded-xl w-full md:w-1/4 sm:w-1/3 lg:w-1/5 hover:scale-95 transition hover:duration-700">
                             <Link to={`/rest/${item.slug}`}>
 
                             <div className="flex flex-col relative mb-2"> 
@@ -128,7 +128,7 @@ const Render = ({restaurants, copyArray, load, onChange} : Props) => {
                                 <p className="text-xl font-semibold pb-1"> {item.name}</p>                         
                                 <p className="text-slate-700 border-2 border-yellow-300 rounded-2xl p-1 pl-2 pr-4 font-semibold w-fit">🥙  {item.cuisine}</p>
                                 <p className="text-slate-700 p-1 pl-2 font-semibold w-fit text-base">☎️ {item.phone}</p>
-                                <p className="text-slate-700 bg-slate-100 rounded-xl p-1 pl-2 font-semibold w-fit text-xs">✉️  {item.email}</p>
+                                <p className="text-slate-700 bg-slate-100 rounded-xl p-1 pl-2 font-semibold w-fit lg:flex hidden flex-wrap text-xs">✉️  {item.email}</p>
                                 <p className="text-sm font-semibold pr-4 text-slate-700">  {item.address}</p>
                             </div>
 

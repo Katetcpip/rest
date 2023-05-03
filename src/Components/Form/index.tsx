@@ -24,20 +24,20 @@ const FormOrder = ({fromFormData} : any) => {
                 fromFormData(fields);
             }}
             render={({ errors, status, touched }:any) => (
-                <Form className='border-2 rounded-xl border-yellow-400'>
+                <Form className='border-2 rounded-xl border-yellow-400 lg:w-fit w-full'>
                     <div className="flex flex-col p-4 rounded-t-xl w-full">
                         <label htmlFor="firstName" className='pb-2'>Имя</label>
-                        <Field name="firstName" type="text" className='rounded-xl ml-2 border border-yellow-400 pl-2'/>
+                        <Field name="firstName" type="text" className='rounded-xl ml-2 border border-yellow-400 pl-2 md:p-1 p-3'/>
                         <ErrorMessage name="firstName" component="div" className="w-full text-red-800 font-thin" />
                     </div>
                     <div className="flex flex-col p-4 w-full">
                         <label htmlFor="phone" className='pb-2'>Телефон</label>
-                        <Field name="phone" type="number" className='rounded-xl ml-2 border border-yellow-400 pl-2' />
+                        <Field name="phone" type="number" className='rounded-xl ml-2 border border-yellow-400 pl-2 md:p-1 p-3' />
                         <ErrorMessage name="phone" component="div" className="w-full text-red-800 font-thin" />
                     </div>
                     <div className="flex flex-col p-4 w-full">
                         <label htmlFor="email" className='pb-2'>Email</label>
-                        <Field name="email" type="text" className='rounded-xl ml-2 border border-yellow-400 pl-2' />
+                        <Field name="email" type="text" className='rounded-xl ml-2 border border-yellow-400 pl-2 md:p-1 p-3' />
                         <ErrorMessage name="email" component="div" className="text-red-800 font-thin" />
                     </div>
                     <div className="flex flex-row p-4">

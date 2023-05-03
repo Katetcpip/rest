@@ -1,3 +1,9 @@
 .widthCard {
     width: 32%;
 }
+
+@media (max-width: 768px) {
+    .widthCard {
+        width: 100%;
+    }
+}

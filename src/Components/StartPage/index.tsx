@@ -37,12 +37,12 @@ export default function StartPage() {
           }}>
 
           <div className='flex flex-col w-full h-full items-center justify-center'>
-              <p className='mt-auto text-7xl font-bold text-yellow-400'>Закажи домой поесть!</p>
-              <img className='h-1/2 w-1/2 mr-auto' alt='' src='https://www.pngplay.com/wp-content/uploads/7/Nyan-Cat-PNG-Clipart-Background.gif'></img>
+              <p className='lg:mt-auto mt-96 text-center lg:text-7xl md:text-5xl text-3xl font-bold text-yellow-400'>Закажи домой поесть!</p>
+              <img className='lg:h-1/2 lg:w-1/2 w-5/6 mr-auto lg:mt-2 mt-auto' alt='' src='https://www.pngplay.com/wp-content/uploads/7/Nyan-Cat-PNG-Clipart-Background.gif'></img>
           </div>
 
           <img alt='' src='https://i.pinimg.com/originals/d8/1f/7c/d81f7ce108651728f64a2ff20fe59059.gif'
-               className='absolute top-10 right-24 w-1/6 -rotate-12'>
+               className='absolute top-10 md:right-24 right-10 md:w-1/6 w-1/3 -rotate-12'>
           </img>
           
         </ParallaxLayer>

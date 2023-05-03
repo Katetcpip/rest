@@ -46,9 +46,9 @@ const Menu = ({slug, addToCart, removeFromCart, cartItems} : Props) => {
                     </div>
 
                     <div className="flex flex-col pb-4 pl-2 h-fit pb-0">
-                        <p className="text-2xl font-semibold pr-4 text-slate-700"> {item.price}₽</p>
-                        <p className="text-base font-normal text-slate-800 pb-4"> {item.name}</p>                          
-                        <p className="text-sm font-normal pr-4 text-slate-400">  {item.description}</p>
+                        <p className="lg:text-2xl text-xl font-semibold pr-4 text-slate-700"> {item.price}₽</p>
+                        <p className="lg:text-base text-sm font-normal text-slate-800 pb-4"> {item.name}</p>                          
+                        <p className="lg:text-sm text-xs font-normal pr-4 text-slate-400">  {item.description}</p>
                     </div>
 
                     <div className='flex w-full justify-center mt-auto'>

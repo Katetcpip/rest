@@ -39,7 +39,7 @@ const ScrollButton = () =>{
   window.addEventListener('scroll', toggleVisible);
   
   return (
-    <Button>
+    <Button className='sm:flex hidden'>
      <FaArrowCircleUp 
         onClick={scrollToTop} 
         style={{display: visible ? 'inline' : 'none'}} />
