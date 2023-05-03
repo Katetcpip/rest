@@ -77,7 +77,7 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
             <Nav copyArray={copyArray} onChange={onChange}/>
             <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
             <Link to='/rest'>
-                  <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
+                  <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 sm:fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
             </Link>
             {load ? <div className="flex justify-center">
                          <ImageGrid/>
