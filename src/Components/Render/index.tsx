@@ -123,7 +123,7 @@ const Render = ({restaurants, copyArray, load, onChange} : any) => {
         setButBurger(false);
     }
      return(
-        <>
+        <div className="min-h-screen flex flex-col">
           <Nav restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>
          <div className='p-4 pt-6 text-4xl font-bold text-gray-800 mt-4'>Рестораны</div>
          
@@ -165,7 +165,7 @@ const Render = ({restaurants, copyArray, load, onChange} : any) => {
         }
         <ScrollButton />
         <Footer/>
-        </>
+        </div>
          )
 }
 

@@ -11,14 +11,15 @@ const Support = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [api, contextHolder] = notification.useNotification();
-  const openNotification = () => {
-    api.open({
-      message: 'Успешно!',
-      description:
-        'Мы получили ваше сообщение и обработаем его в ближайщее время!',
-      icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-    });
-  };
+    
+    const openNotification = () => {
+      api.open({
+        message: 'Успешно!',
+        description:
+          'Мы получили ваше сообщение и обработаем его в ближайшее время!',
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+      });
+    };
 
     const showModal = () => {
         setIsModalOpen(true);

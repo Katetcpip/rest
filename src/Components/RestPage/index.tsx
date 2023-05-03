@@ -13,26 +13,23 @@ import ScrollButton from "Components/ScrollButton";
 import Nav from "Components/Navigation";
 import Footer from "Components/Footer";
 
-const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
+export type Rest = {
+    id: number,
+    name: string,
+    slug: any,
+    phone: any,
+    email : string,
+    cuisine : string,
+    address : string,
+    image : string,
+    openAt :any,
+    closeAt : any,
+    description :string,
+}
 
-    const [restaurant, setRestaurant] = useState(
-        {
-            id: 1,
-            name: 'example',
-            slug: 'url-example',
-            phone: 'tel-example',
-            email : 'mailexample-example',
-            cuisine : 'type k-example',
-            address : 'address-example',
-            image : 'img-example',
-            openAt :'timeopen-example',
-            closeAt : 'timeclose-example',
-            description :'descr-example',
-        }
-    );
+const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, contextHolder} : any) => {
     const {slug} = useParams();
-    
-    const [load, setLoad] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
@@ -44,6 +41,10 @@ const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
         };
         fetchData();
     }, [slug]);
+
+    const [restaurant, setRestaurant] = useState<Rest>();
+   
+    const [load, setLoad] = useState(true);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -60,8 +61,9 @@ const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
     };
 
      return(
-        <>     
-        <Nav restaurants={restaurants} copyArray={copyArray} onChange={onChange}/>
+        <div className="min-h-screen flex flex-col">   
+        {contextHolder}  
+        <Nav copyArray={copyArray} onChange={onChange}/>
        <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
        <Link to='/rest'>
             <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
@@ -69,7 +71,9 @@ const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
        {load ? <div className="flex justify-center">
             <ImageGrid/>
             </div> 
-            : <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-3/5 mb-8"> 
+            : 
+           (restaurant !== undefined &&                 
+                <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-3/5 mb-8"> 
                     <div className="flex flex-col rounded-xl w-full">
                        <div className="flex flex-col items-center w-full h-fit relative">
                             <img className="rounded-xl w-full h-72 object-cover z-0" alt="" src={restaurant.image}></img>
@@ -100,12 +104,12 @@ const RestPage = ({restaurants, copyArray, onChange, addToCart} : any) => {
                     <ComponentDemo text="🎁 Блюдо в подрок при заказе от 1000₽"/>
                     <ScrollButton />
                     <div className='pt-10 w-full flex m-auto text-4xl font-semibold text-gray-800 '>Для вас</div>
-                    <Menu slug={slug} addToCart={addToCart}/>
-            </div>
+                    <Menu slug={slug} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems}/>
+                </div>)
         }
         </div>
         <Footer/>
-        </>
+        </div>
          )
 }
 
