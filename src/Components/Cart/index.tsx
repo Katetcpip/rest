@@ -45,7 +45,7 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
       api.open({
         message: 'Успешно!',
         description:
-          'Мы получили ващ заказ и уже работаем над ним!',
+          'Мы получили ваш заказ и уже работаем над ним!',
         icon: <SmileOutlined style={{ color: '#108ee9' }} />,
       });
     };
@@ -135,9 +135,9 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
                                 <p className="text-md font-bold pr-4 text-slate-700 cursor-pointer lg:text-base text-sm">{cartItems.indexOf(item)+1}. </p>
                                 <p className="text-md font-normal pr-4 text-slate-700 w-1/3 lg:text-base text-sm">{item.name}</p>
                                 <p className="text-md font-semibold pr-4 text-slate-700 ml-4 w-1/6 text-center lg:text-base text-sm">{Math.round(item.price * item.quantity )} ₽</p>
-                                <div onClick={() => removeFromCart(item.name)} className="ml-auto cursor-pointer lg:text-base text-sm">➖</div>
+                                <div onClick={() => removeFromCart(item.name)} className="ml-auto cursor-pointer lg:text-base text-чы">➖</div>
                                 <p className="text-md font-normal pr-4 text-slate-700 rounded-full bg-white flex justify-center p-2 lg:px-4 px-4 border-2 border-yellow-400 ml-1 mr-1 lg:text-base text-sm"> {item.quantity } </p>
-                                <div onClick={() => addToCart(item.name)} className="cursor-pointer lg:text-base text-sm">➕</div>
+                                <div onClick={() => addToCart(item.name)} className="cursor-pointer lg:text-base text-чы">➕</div>
                             </div>
                         </div>
                     ))}
