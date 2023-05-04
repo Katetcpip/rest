@@ -1,7 +1,7 @@
 import ContentLoader from 'react-content-loader'
 
 const ImageGrid = () => (
-  <ContentLoader
+  <ContentLoader className='!w-full !h-full'
     width={800}
     height={575}
     viewBox="0 0 800 575"

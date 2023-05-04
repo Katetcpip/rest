@@ -101,6 +101,9 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
         fetch('https://www.bit-by-bit.ru/api/student-projects/restaurants/order', requestOptions)
         .then(response => response.json())
         .then(data => openNotification());
+
+        setTimeout(() =>deleteAllCart(), 2000)
+        
     }
 
      return(
