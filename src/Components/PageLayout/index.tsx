@@ -1,23 +1,27 @@
-import Nav from "Components/Navigation";
-import Footer from "Components/Footer";
-import { Rest } from "Components/RestPage";
-import { CartType } from "Components/App";
+import Nav from 'Components/Navigation'
+import Footer from 'Components/Footer'
+import { Rest } from 'Components/RestPage'
+import { CartType } from 'Components/App'
 
 type Props = {
-    children : JSX.Element 
-    cartItems : Array<CartType>,
-    copyArray : Array<Rest>,
-    onChange : (a : Array<Rest>) => void,
+    children: JSX.Element
+    cartItems: Array<CartType>
+    copyArray: Array<Rest>
+    onChange: (a: Array<Rest>) => void
 }
 
-const PageLayout = ({children, cartItems, copyArray, onChange} : Props) => {
-    return(
+const PageLayout = ({ children, cartItems, copyArray, onChange }: Props) => {
+    return (
         <>
-        <Nav copyArray={copyArray} onChange={onChange} cartItems={cartItems}/>
+            <Nav
+                copyArray={copyArray}
+                onChange={onChange}
+                cartItems={cartItems}
+            />
             {children}
-        <Footer/>
+            <Footer />
         </>
     )
 }
 
-export default PageLayout;
+export default PageLayout
