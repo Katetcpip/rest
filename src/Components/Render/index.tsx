@@ -5,107 +5,76 @@ import dateFormat from "dateformat";
 import './styles.css'
 import {Link} from 'react-router-dom'
 import ScrollButton from "Components/ScrollButton";
-import Nav from "Components/Navigation";
-import Footer from "Components/Footer";
 import { Rest } from "Components/RestPage";
+import { CartType } from "Components/App";
+import PageLayout from "Components/PageLayout";
 
 type Props = {
     restaurants : Array<Rest>,
     copyArray : Array<Rest>,
     load : boolean,
-    onChange : (a : Array<Rest>) => void
+    onChange : (a : Array<Rest>) => void,
+    cartItems : Array<CartType>
 }
 
-const Render = ({restaurants, copyArray, load, onChange} : Props) => {
-  
-    const [butTop, setButTop] = useState(false);
-    const [butAll, setButAll] = useState(true);
-    const [butPasta, setButPasta] = useState(false)
-    const [butOut, setButOut] = useState(false)
-    const [butPizza, setButPizza] = useState(false)
-    const [butBurger, setButBurger] = useState(false)
+type CuisineType = {
+    value : string,
+    title : string
+}
 
-    const filterTop = () : void => {
-        const arrayTop : Array<Rest> = copyArray.filter((el : Rest) => el.phone[0] === '3');
-        onChange(arrayTop);
-        setButTop(true);
-        setButAll(false);
-        setButPasta(false);
-        setButOut(false);
-        setButPizza(false);
-        setButBurger(false);
+const cuisines : CuisineType[] = [
+    {
+        value : 'all',
+        title: 'Все'
+    },
+    {
+        value : 'pasta',
+        title: 'Паста'
+    },
+    {
+        value : 'pizza',
+        title: 'Пицца'
+    },
+    {
+        value : 'burger',
+        title: 'Бургер'
     }
-    const filterOut = () : void => {
-        const arrayOut : Array<Rest> = copyArray.filter((el:Rest) => el.phone[2] === '2' || el.phone[2] === '9')
-        onChange(arrayOut)
-        setButTop(false);
-        setButAll(false);
-        setButPasta(false);
-        setButOut(true);
-        setButPizza(false);
-        setButBurger(false);
+] 
+
+const Render = ({restaurants, copyArray, load, onChange, cartItems} : Props) => {
+
+    const [filter, setFilter] = useState(cuisines[0].value)
+
+    const makeFilter = (cType: string): void => {
+        setFilter(cType)
+        if (cType === 'all'){onChange(copyArray)}
+        else{
+        const arrayTop: Array<Rest> = copyArray.filter(
+            (el : Rest) => el.cuisine === cType
+        );
+        onChange(arrayTop)}
     }
-    const filterPasta = () : void => {
-        const arrayPasta : Array<Rest> = copyArray.filter((el:Rest) => el.cuisine === 'pasta')
-        onChange(arrayPasta)
-        setButTop(false);
-        setButAll(false);
-        setButPasta(true);
-        setButOut(false);
-        setButPizza(false);
-        setButBurger(false);
-    }
-    const filterBurger = () : void => {
-        const arrayBurger : Array<Rest> = copyArray.filter((el : Rest) => el.cuisine === 'burger')
-        onChange(arrayBurger)
-        setButTop(false);
-        setButAll(false);
-        setButPasta(false);
-        setButOut(false);
-        setButPizza(false);
-        setButBurger(true);
-    }
-    const filterPizza = () : void => {
-        const arrayPizza : Array<Rest> = copyArray.filter((el : Rest) => el.cuisine === 'pizza')
-        onChange(arrayPizza)
-        setButTop(false);
-        setButAll(false);
-        setButPasta(false);
-        setButOut(false);
-        setButPizza(true);
-        setButBurger(false);
-    }
-    const filterAll = () : void => {
-        onChange(copyArray)
-        setButTop(false);
-        setButAll(true);
-        setButPasta(false);
-        setButOut(false);
-        setButPizza(false);
-        setButBurger(false);
-    }
+
     return(
+        <PageLayout cartItems={cartItems} copyArray={copyArray} onChange={onChange}>
         <div className="min-h-screen flex flex-col">
-            <Nav 
-            // restaurants={restaurants} 
-                 copyArray={copyArray} 
-                 onChange={onChange}
-            />
             <div className='p-4 md:pt-6 pt-2 md:text-4xl text-2xl font-bold text-gray-800 mt-4'>Рестораны</div>
-         
+
             <div className="px-3 md:py-3 py-1 rounded-3xl bg-slate-100 m-4 flex flex-row flex-wrap gap-3">
-                <div className={butAll === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 hover:text-black filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"}
-                    onClick={() => filterAll()}>Все</div>
-                <div className={butOut === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
-                    onClick={() => filterOut()}>Навынос</div>
-                <div className={butTop === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
-                    onClick={() => filterTop()}>Топ</div>
-                <div className={butPasta === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
-                    onClick={() => filterPasta()}>Паста</div>
-                <div className={butBurger === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
-                    onClick={() => filterBurger()}>Бургер</div> 
-                <div className={butPizza === false ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" : "bg-slate-700 text-slate-200 filter hover:text-black hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"} 
-                    onClick={() => filterPizza()}>Пицца</div>
+
+                {cuisines.map((c: CuisineType) => (
+                    <div
+                        className={
+                        c.value !== filter
+                        ? "filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2" 
+                        : "bg-slate-700 text-slate-200 hover:text-black filter hover:bg-slate-200 md:text-xl text-sm md:py-3 py-2"
+                        }
+                        onClick={() => makeFilter(c.value)}
+                        >
+                            {c.title}
+                    </div>
+                ))}
+
             </div>
 
             {load 
@@ -138,8 +107,8 @@ const Render = ({restaurants, copyArray, load, onChange} : Props) => {
                 </div>
             }
         <ScrollButton />
-        <Footer/>
         </div>
+        </PageLayout>
     )
 }
 

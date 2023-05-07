@@ -23,7 +23,7 @@ const FormOrder = ({fromFormData} : any) => {
             onSubmit={fields => {
                 fromFormData(fields);
             }}
-            render={({ errors, status, touched }:any) => (
+            render={({ errors, status, touched }) => (
                 <Form className='border-2 rounded-xl border-yellow-400 lg:w-fit w-full'>
                     <div className="flex flex-col p-4 rounded-t-xl w-full">
                         <label htmlFor="firstName" className='pb-2'>Имя</label>

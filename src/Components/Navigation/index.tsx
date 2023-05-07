@@ -1,17 +1,25 @@
 import { Rest } from "Components/RestPage";
 import "./styles.css"
 import {Link} from 'react-router-dom'
+import { CartType } from "Components/App";
 
 type Props = {
     copyArray : Array<Rest>,
-    onChange : (a : Array<Rest>) => void
+    onChange : (a : Array<Rest>) => void,
+    cartItems : Array<CartType>
 }
 
-const Nav = ({ copyArray, onChange }: Props) : JSX.Element => {
+const Nav = ({ copyArray, onChange, cartItems }: Props) : JSX.Element => {
 
     const restSearch = (rest : string) => {
         const restToFind : Array<Rest> = copyArray.filter((el : Rest) => el.name.toLowerCase().includes(rest.toLowerCase()))
         onChange(restToFind)
+    }
+
+    const itemsAmount = () : number => {
+        let sum = 0;
+        cartItems.forEach( (el : CartType) => sum = sum + el.quantity)
+        return sum
     }
 
     return (
@@ -43,7 +51,8 @@ const Nav = ({ copyArray, onChange }: Props) : JSX.Element => {
                 </div>
 
                 <Link to='/cart' className='gradient bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
-                    <div className='flex flex-row items-center bg-white p-0.5 rounded-full'>
+                    <div className='flex flex-row items-center bg-white p-0.5 rounded-full relative'>
+                        <div className="p-1 px-3 rounded-full absolute -top-2 -right-4 text-sm bg-yellow-300">{itemsAmount()}</div>
                         <img alt='' className="lg:w-11 lg:h-11 w-8 h-8 cursor-pointer p-2" src='https://cdn-icons-png.flaticon.com/512/6644/6644893.png'></img>
                     </div>
                 </Link>

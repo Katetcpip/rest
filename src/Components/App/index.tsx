@@ -1,19 +1,20 @@
 import Render from 'Components/Render';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import RestPage from 'Components/RestPage';
 import StartPage from 'Components/StartPage';
 import Cart from 'Components/Cart';
 import { Rest } from 'Components/RestPage';
 import { FrownOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
+import { Result, Button} from 'antd';
 
 export type CartType =   {
     name: string,
-    price: any,
+    price: number,
     quantity : number,
-    restaurantId : any,
+    restaurantId : number,
     itemId : number
 }
 
@@ -67,7 +68,7 @@ function App() {
     const addToCart = (price:number, name:string, restaurantId:number, itemId:number) : void => {
         let quantity = 1;
         let item : CartType = {name, restaurantId, itemId, quantity, price};
-        let copyArr2 : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
+        let copyArr2 : Array<CartType> = [...cartItems]
 
         if (copyArr2.length === 0)
             {copyArr2.push(item)
@@ -95,7 +96,7 @@ function App() {
     }
 
     const removeFromCart = (name:string) : void => {
-        let newArr : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
+        let newArr : Array<CartType> = [...cartItems]
         let result : number | boolean = newArr.findIndex(el => el.name === name)
 
         if (newArr[result].quantity  >= 1) {
@@ -112,7 +113,7 @@ function App() {
     }
 
     const deleteAllCart = () : void => {
-        let newArr : Array<any> = [];
+        let newArr : Array<CartType> = [];
         setCartItems(newArr)
         localStorage.setItem("cart", JSON.stringify(newArr))
     }
@@ -120,9 +121,14 @@ function App() {
     return ( 
         <BrowserRouter>
             <Routes>
+                <Route path='*' element={<Result title="404" status="404" subTitle="Кажется, такой страницы нет..." extra={
+                <Link to="/rest" className='flex justify-center w-full'>
+                <Button className='!flex !border !border-blue-400 hover:scale-105 !text-blue-400' type="primary">Вернуться к ресторанам</Button>
+                </Link>}
+                />}></Route>
                 <Route path='/' element={<StartPage/>}></Route>
-                <Route path='/cart' element={<Cart cartItems={cartItems} deleteAllCart={deleteAllCart} actionInCart={actionInCart} copyArray={copyArray} onChange={onChange}/>}></Route>
-                <Route path='/rest' element={<Render restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
+                <Route path='/cart' element={<Cart removeFromCart={removeFromCart} cartItems={cartItems} deleteAllCart={deleteAllCart} actionInCart={actionInCart} copyArray={copyArray} onChange={onChange}/>}></Route>
+                <Route path='/rest' element={<Render cartItems={cartItems} restaurants={restaurants} copyArray={copyArray} load={load} onChange={onChange}/>}></Route>
                 <Route path='/rest/:slug' element={<RestPage copyArray={copyArray} onChange={onChange} addToCart={addToCart} removeFromCart={removeFromCart} cartItems={cartItems} contextHolder={contextHolder}/>}></Route>
             </Routes>
         </BrowserRouter> 

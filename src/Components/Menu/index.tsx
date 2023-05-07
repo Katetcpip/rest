@@ -12,11 +12,11 @@ type Dishes = {
     name : string,
     image: string,
     description : string,
-    price  : any,
+    price  : number,
 }
 
 type Props = {
-    slug : any,
+    slug : string | undefined,
     addToCart : (price:number, name:string, restaurantId:number, itemId:number) => void,
     removeFromCart : (name : string) => void,
     cartItems : Array<CartType>
@@ -56,11 +56,11 @@ const Menu = ({slug, addToCart, removeFromCart, cartItems} : Props) => {
                             justify-center w-full cursor-pointer hover:bg-slate-200 
                             hover:duration-700 transition'>
                             {cartItems.filter((el : CartType) => el.name === item.name).length <= 0 
-                                ? <div onClick={() => addToCart(item.price, item.name, item.restaurantId, item.id)}>➕ Добавить</div>
+                                ? <div className='w-full flex justify-center' onClick={() => addToCart(item.price, item.name, item.restaurantId, item.id)}>➕ Добавить</div>
                                 : (
                                     <>
                                     <div className='flex items-center pl-3 w-1/5 h-full' onClick={() => removeFromCart(item.name)}>➖</div>
-                                    <div className='px-3 w-3/5 text-center'>{cartItems.filter((el:any)=> el.name === item.name)[0].quantity }</div> 
+                                    <div className='px-3 w-3/5 text-center'>{cartItems.filter((el : CartType)=> el.name === item.name)[0].quantity }</div> 
                                     <div className='flex items-center pr-3 w-1/5' onClick={() => addToCart(item.price, item.name, item.restaurantId, item.id)}>➕</div>   
                                     </>
                                 )

@@ -33,7 +33,7 @@ const Support = () => {
 
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: string) => {
         console.log(values);
         handleOk()
     };

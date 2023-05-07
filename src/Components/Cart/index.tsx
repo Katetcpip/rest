@@ -8,16 +8,17 @@ import {ArrowLeftOutlined} from '@ant-design/icons'
 import FormOrder from "Components/Form";
 import { SmileOutlined } from '@ant-design/icons';
 import { Rest } from "Components/RestPage";
+import PageLayout from "Components/PageLayout";
  
 type finalCart = {
     itemId: number,
     quantity: number,
-    price:any
+    price:number
 }
 
 type Request = {
     customerName: string,
-    phone: any,
+    phone: number,
     email: string,
     restaurantId: number,
     cartItems: Array<finalCart>
@@ -34,10 +35,11 @@ type Props = {
     deleteAllCart : () => void,
     actionInCart : (a : Array<CartType>) => void,
     copyArray : Array<Rest>,
-    onChange : (a : Array<Rest>) => void
+    onChange : (a : Array<Rest>) => void,
+    removeFromCart : (name : string) => void
 }
 
-const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Props) => {
+const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange, removeFromCart} : Props) => {
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -51,24 +53,11 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
     };
 
     const addToCart = (name : string) : void => {
-        let newArr : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
+        let newArr : Array<CartType> = [...cartItems]
         let indexItem : number | boolean = newArr.findIndex((el : CartType) => el.name === name)
         newArr[indexItem].quantity = newArr[indexItem].quantity  + 1;
         actionInCart(newArr)
         localStorage.setItem("cart", JSON.stringify(newArr))
-        itemsquantity (newArr);
-    }
-
-    const removeFromCart = (name : string) : void => {
-        let newArr : Array<CartType> = JSON.parse(JSON.stringify(cartItems))
-        let indexItem : number | boolean = newArr.findIndex((el : CartType) => el.name === name)
-
-        if ( newArr[indexItem].quantity > 1){
-            newArr[indexItem].quantity  = newArr[indexItem].quantity  - 1;
-            actionInCart(newArr)
-            localStorage.setItem("cart", JSON.stringify(newArr))
-        }
-
         itemsquantity (newArr);
     }
 
@@ -107,10 +96,9 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
     }
 
      return(
+        <PageLayout copyArray={copyArray} onChange={onChange} cartItems={cartItems}>
         <div className="min-h-screen flex flex-col">
             {contextHolder}
-            <Nav copyArray={copyArray} onChange={onChange}/>
-
             <div className="w-full flex flex-row pt-6 mb-10">
                 <Link to='/rest'>
                     <div className="w-fit pl-8 pt-1 flex items-center h-full md:text-2xl text-xl">
@@ -127,7 +115,6 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
                 ? 
                     <Result
                     status="404"
-                    title="404"
                     subTitle="Кажется, в корзине пусто..."
                 />
                 : 
@@ -152,8 +139,8 @@ const Cart = ({cartItems, deleteAllCart, actionInCart, copyArray, onChange} : Pr
                     }
                 </div>
             }       
-            <Footer/>
         </div>
+        </PageLayout>
     )
 }
 

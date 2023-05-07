@@ -10,31 +10,30 @@ import {Link} from 'react-router-dom'
 import {ArrowLeftOutlined} from '@ant-design/icons'
 import ComponentDemo from "Components/Advertising";
 import ScrollButton from "Components/ScrollButton";
-import Nav from "Components/Navigation";
-import Footer from "Components/Footer";
 import { CartType } from "Components/App";
+import PageLayout from "Components/PageLayout";
 
 export type Rest = {
     id: number,
     name: string,
     slug: string,
-    phone: any,
+    phone: string,
     email : string,
     cuisine : string,
     address : string,
     image : string,
-    openAt :any,
-    closeAt : any,
+    openAt :string,
+    closeAt : string,
     description :string,
 }
 
 type Props = {
     copyArray : Array<Rest> ,
-    onChange : (a:any) => void,
+    onChange : (a : Rest[]) => void,
     removeFromCart : (name: string) => void,
     addToCart : (price:number, name:string, restaurantId:number, itemId:number) => void,
     cartItems : Array<CartType>,
-    contextHolder : any
+    contextHolder : React.ReactElement 
 }
 
 const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, contextHolder} : Props) => {
@@ -72,9 +71,11 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
     };
 
     return(
+        <PageLayout cartItems={cartItems}
+        copyArray={copyArray} 
+        onChange={onChange}>
        <div className="min-h-screen flex flex-col">   
             {contextHolder}  
-            <Nav copyArray={copyArray} onChange={onChange}/>
             <div className="flex flex-row flex-wrap gap-5 p-4 justify-center w-full mb-4"> 
             <Link to='/rest'>
                   <div className="w-fit font-semibold bg-slate-100 p-3 rounded-2xl cursor-pointer top-0 px-10 sm:fixed top-28 left-16 right-0 flex items-center gap-2"><ArrowLeftOutlined />Все реcтораны</div>
@@ -121,8 +122,8 @@ const RestPage = ({copyArray, onChange, removeFromCart, addToCart, cartItems, co
                 </div>)
             }
             </div>
-            <Footer/>
         </div>
+        </PageLayout>
     )
 }
 
